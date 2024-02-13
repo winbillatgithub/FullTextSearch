@@ -1,0 +1,123 @@
+
+/* 最外层搜索显示文章 */
+#search-content-container {
+	clear: both;
+	padding-left: 20px;
+	margin: 0;
+	background-color: #ffffff;
+}
+/* 左侧的检索文章明细------------开始 */
+#search-content-article-detail-container {
+	float: left;
+	width: 800px;
+	padding-left: 40px;
+	margin: 0;
+}
+
+/* 左侧的检索文章明细------------结束 */
+
+/*评论-----------------开始*/
+#search-content-article-detail-comment-container {
+	
+}
+
+#search-content-article-detail-comment-container .commentList {
+	
+}
+
+#search-content-article-detail-comment-container .commentList  .commentUserImage
+	{
+	clear: both;
+	float: left;
+	padding: 10px;
+	margin: 10px;
+}
+
+#search-content-article-detail-comment-container .commentList .commentInfo
+	{
+	float: left;
+	padding: 10px;
+	margin: 10px;
+}
+
+#search-content-article-detail-comment-container .commentList .commentInfo .commentContent
+	{
+	color: #49ab84;
+	background: white;
+	font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: 15px;
+	line-height: 24px;
+}
+
+#search-content-article-detail-comment-container .commentList hr {
+	clear: both;
+}
+
+#search-content-article-detail-comment-container .commentContainer
+	{
+	clear: both;
+	background: #f5f8fa;
+	border-top: 2px solid #e1e3e6;
+	padding: 25px 25px 10px;
+	margin:30px 0 0 0;
+}
+
+#currentCommentUser{
+	margin:10px 0 10px 0;
+}
+
+#postCommentButton-container{
+	margin:10px;
+}
+
+#postCommentButton{
+	font-size: 1em;
+	border: none;
+	height: 30px;
+	border-radius: 5px;
+	background-color: #59ade0;
+}
+
+#postCommentButton:hover{
+	cursor: pointer;
+}
+/*评论-----------------结束*/
+
+/* 右侧的分类列表------------开始 */
+#search-content-type-container {
+	min-width:250px;
+	max-width:230px;
+	float: left;
+	background-color: #f5f8fa;
+	/*padding: 20px 20px 20px 20px;*/
+	margin-top: 20px;
+	margin-left: 40px;
+}
+
+#article-type-group-ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	font-size:0.8em;
+    color: #666666;
+}
+
+#search-content-type-container .type-item{
+	clear: both;
+	background-color: #f5f8fa;
+/* 	padding: 20px 20px 20px 20px;*/
+ 	margin: 20px;
+}
+
+#search-content-type-container .type-item ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+    line-height: 1.5em;
+}
+
+#search-content-type-container a,a:visited{
+    font-size: 0.8em;
+    color: #666666;
+}
+/* 右侧的分类列表------------结束 */

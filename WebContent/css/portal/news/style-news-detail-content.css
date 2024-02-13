@@ -1,0 +1,42 @@
+#news-detail-container {
+	float: left;
+	width: 800px;
+}
+
+#news-detail-container .news-article  h3 {
+	font-size: 26px;
+	font-family: "Nunito", sans-serif;
+	font-weight: normal;
+	line-height: 24px;
+	color: #1a1a1a;
+}
+
+#news-detail-container .news-article ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#news-detail-container .news-article ul>li {
+	float: left;
+	margin: 0;
+	padding: 0;
+}
+
+#news-detail-container .news-article ul>li a, a:visited {
+	text-decoration: none;
+	font-family: "Nunito", sans-serif;
+	font-weight: normal;
+	line-height: 24px;
+	color: #1a1a1a;
+}
+
+#news-detail-container .news-article ul>li:after {
+	content: "|";
+	margin: 0 5px;
+	color: #e1e3e6;
+}
+
+#news-detail-container .news-article ul>li:last-child:after {
+	content: none;
+}

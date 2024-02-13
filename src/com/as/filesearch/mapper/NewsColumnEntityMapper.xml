@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.as.filesearch.mapper.NewsColumnEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.as.filesearch.entity.NewsColumnEntity" >
+    <id column="column_id" property="columnId" jdbcType="BIGINT" />
+    <result column="column_name" property="columnName" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_id" property="createId" jdbcType="BIGINT" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modify_id" property="modifyId" jdbcType="BIGINT" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+    <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    column_id, column_name, status, create_id, create_time, modify_id, modify_time, is_delete, 
+    version
+  </sql>
+	<!-- 取查询总数 -->
+	<select id="selectAllCountByPagination" resultType="java.lang.Integer"
+		parameterType="java.util.Map">
+		select count(*)
+		from d_news_column dnc
+		where dnc.is_delete = 1
+		<trim  >
+			<if test="columnName != null and columnName !=''">
+				and dnc.column_name like CONCAT('%',#{columnName},'%')
+			</if>
+			<if test="status != null and status !=''">
+				and dnc.status = #{status,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</select>
+	<!-- 取分页数据 -->
+	<select id="selectAllByPagination" resultMap="BaseResultMap"
+		parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List" />
+		from d_news_column dnc
+		where dnc.is_delete = 1
+		<trim >
+			<if test="columnName != null and columnName !=''">
+				and dnc.column_name like CONCAT('%',#{columnName},'%')
+			</if>
+			<if test="status != null and status !=''">
+				and dnc.status = #{status,jdbcType=VARCHAR}
+			</if>
+		</trim>
+		order by ${sortItem} ${sortOrder}
+		limit
+		#{startNum,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+	</select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from d_news_column
+    where column_id = #{columnId,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectAllDistinctNewsColumns" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from d_news_column
+    where is_delete = 1 and status = 0
+  </select>
+
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from d_news_column
+    where column_id = #{columnId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByPrimaryKeys" parameterType="java.lang.Long">
+		update d_news_column
+		set is_delete = 0
+		where column_id in
+		<foreach item="idItem" collection="array" open="(" separator="," close=")">
+			#{idItem}
+		</foreach>
+	</delete>  
+  <insert id="insert" parameterType="com.as.filesearch.entity.NewsColumnEntity" >
+    insert into d_news_column (column_id, column_name, status, 
+      create_id, create_time, modify_id, 
+      modify_time, is_delete, version
+      )
+    values (#{columnId,jdbcType=BIGINT}, #{columnName,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{createId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{modifyId,jdbcType=BIGINT}, 
+      #{modifyTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.as.filesearch.entity.NewsColumnEntity" >
+    insert into d_news_column
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="columnId != null" >
+        column_id,
+      </if>
+      <if test="columnName != null" >
+        column_name,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifyId != null" >
+        modify_id,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="isDelete != null" >
+        is_delete,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="columnId != null" >
+        #{columnId,jdbcType=BIGINT},
+      </if>
+      <if test="columnName != null" >
+        #{columnName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyId != null" >
+        #{modifyId,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.as.filesearch.entity.NewsColumnEntity" >
+    update d_news_column
+    <set >
+      <if test="columnName != null" >
+        column_name = #{columnName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="modifyId != null" >
+        modify_id = #{modifyId,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where column_id = #{columnId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.as.filesearch.entity.NewsColumnEntity" >
+    update d_news_column
+    set column_name = #{columnName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      create_id = #{createId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_id = #{modifyId,jdbcType=BIGINT},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      is_delete = #{isDelete,jdbcType=INTEGER},
+      version = #{version,jdbcType=INTEGER}
+    where column_id = #{columnId,jdbcType=BIGINT}
+  </update>
+</mapper>

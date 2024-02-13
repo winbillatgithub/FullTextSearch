@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.as.filesearch.mapper.LawyerEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.as.filesearch.entity.LawyerEntity" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="lawfirm_id" property="lawfirmId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="is_active" property="isActive" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="create_id" property="createId" jdbcType="INTEGER" />
+    <result column="lawfirm_name" property="lawfirmName" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, lawfirm_id, name, is_active, create_time, create_id
+  </sql>
+  <sql id="A_Column_List" >
+    a.id, a.lawfirm_id, a.name, a.is_active, a.create_time, a.create_id
+  </sql>
+  <!-- 取查询总数 -->
+  <select id="selectAllCount" resultType="java.lang.Integer"
+	parameterType="java.util.Map">
+	select count(*)
+	from c_dic_lawyer
+	<trim prefix="WHERE" prefixOverrides="AND|OR">
+		<if test="isActive != null and isActive != '' ">
+			is_active = '1'
+		</if>
+		<if test="lawfirmId != null and lawfirmId != '' ">
+			lawfirm_id = #{lawfirmId, jdbcType=INTEGER}
+		</if> 
+		<if test="name != null and name != '' and accurate = null ">
+			AND name LIKE CONCAT(CONCAT('%', #{name, jdbcType=VARCHAR}),'%')
+		</if>
+		<if test="name != null and name != '' and accurate != null ">
+			AND name = #{name, jdbcType=VARCHAR}
+		</if>
+	</trim>
+  </select>
+  <!-- 取分页数据 -->
+  <select id="selectAllByPagination" resultMap="BaseResultMap"
+	parameterType="java.util.Map">
+	select
+	<include refid="A_Column_List" />, b.name as lawfirm_name
+	from c_dic_lawyer a, c_dic_lawfirm b
+	<trim prefix="WHERE" prefixOverrides="AND|OR">
+		a.lawfirm_id = b.id
+		<if test="isActive != null and isActive != '' ">
+			AND a.is_active = '1'
+		</if>
+		<if test="lawfirmname != null and lawfirmname != '' ">
+			AND b.name LIKE CONCAT(CONCAT('%', #{lawfirmname, jdbcType=VARCHAR}),'%')
+		</if>
+		<if test="name != null and name != '' ">
+			AND a.name LIKE CONCAT(CONCAT('%', #{name, jdbcType=VARCHAR}),'%')
+		</if>
+	</trim>
+	order by ${sortItem} ${sortOrder}
+	limit
+	#{startNum,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+  </select>
+  <select id="selectByPartName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from c_dic_lawyer
+    where is_active = '1' AND name LIKE CONCAT(CONCAT('%', #{name, jdbcType=VARCHAR}),'%')
+	limit 0, 10
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from c_dic_lawyer
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from c_dic_lawyer
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.as.filesearch.entity.LawyerEntity" >
+    insert into c_dic_lawyer (id, lawfirm_id, name, 
+      is_active, create_time, create_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{lawfirmId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{isActive,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, #{createId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.as.filesearch.entity.LawyerEntity" >
+    insert into c_dic_lawyer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="lawfirmId != null" >
+        lawfirm_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="isActive != null" >
+        is_active,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="lawfirmId != null" >
+        #{lawfirmId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="isActive != null" >
+        #{isActive,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.as.filesearch.entity.LawyerEntity" >
+    update c_dic_lawyer
+    <set >
+      <if test="lawfirmId != null" >
+        lawfirm_id = #{lawfirmId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="isActive != null" >
+        is_active = #{isActive,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.as.filesearch.entity.LawyerEntity" >
+    update c_dic_lawyer
+    set lawfirm_id = #{lawfirmId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      is_active = #{isActive,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_id = #{createId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,120 @@
+#main-container {
+	max-width: 100%;
+	/* height: 400px; */
+	background-color: #49ab84;
+	/* padding-top: 50px; */
+	clear: both;
+	margin: 0;
+	padding-left: 40px;
+}
+
+/* 开始搜索表单内容 */
+#main-search-container {
+	padding: 0 0 40px 0;
+}
+
+#main-container h1 {
+	color: #ffffff;
+	font-size: 30px;
+	margin-top: 0px;
+}
+
+input[id="key-word-input"] {
+	height: 50px;
+	width: 650px;
+	border: 0px;
+	border-radius: 5px;
+	line-height: 40px;
+	font-size: 14px;
+	font-family: "Nunito", sans-serif;
+	font-weight: normal;
+	color: #6e6c6c;
+	padding-left:15px;
+}
+
+#key-word-search-button {
+	/* position使用相对定位，以便按钮能够现在在输入框里面*/
+	position: relative;
+	left: -60px;
+	border-radius: 5px;
+	/* top: -3.5px; */
+	font-size: 0.8em;
+	color: #ffffff;
+	border: none;
+	width: 50px;
+	height: 44px;
+	background-color: #7f7f7f;
+}
+/*鼠标移动到搜索按钮的时候，变色，并且显示手型工具*/
+#key-word-search-button:hover {
+	background-color: #bebcc5;
+	cursor: pointer;
+}
+
+#search-keyword-container {
+	clear: both;
+	background-color: #ebebeb;
+	padding: 5px 0 5px 40px;
+	margin: 0;
+    font-size: 12px;
+	color: #666d73;
+}
+
+#search-keyword-content-container a {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	height: 22px;
+	line-height: 22px;
+    font-size: 12px;
+	/* border: 2px solid #DDD; */
+	vertical-align: center;
+	margin: 0 5px 0px 0;  /* top right bottom left*/
+	padding: 0 26px 0 4px;/* top right bottom left*/
+	color: #666d73;
+}
+
+#search-keyword-content-container .searchItem .closeIco {
+	display: block;
+    position: absolute;
+	width: 25px;
+	height: 22px;
+	right: 0;
+	top: 0;
+	background: url("../../../images/search/no.png") no-repeat 0 center;
+}
+
+#search-casecause-container {
+	clear: both;
+	background-color: #f5f8fa;
+	padding: 5px 0 5px 40px;
+	margin: 0;
+    font-size: 12px;
+	color: #666d73;
+}
+
+#search-casecause-content-container a {
+	position: relative;
+	display: inline-block;
+	cursor: pointer;
+	height: 22px;
+	line-height: 22px;
+    font-size: 12px;
+	/* border: 2px solid #DDD; */
+	vertical-align: center;
+	margin: 0 5px 0px 0;  /* top right bottom left*/
+	padding: 0 26px 0 4px;/* top right bottom left*/
+	color: #666d73;
+}
+
+#search-keyword-content-container .inputItem {
+	display: block;
+    position: absolute;
+	width: 25px;
+	height: 22px;
+	right: 0;
+	top: 0;
+	background: url("../../../images/search/no.png") no-repeat 0 center;
+}
+
+/* 结束搜索表单内容 */

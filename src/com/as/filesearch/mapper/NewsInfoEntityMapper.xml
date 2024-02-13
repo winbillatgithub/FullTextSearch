@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.as.filesearch.mapper.NewsInfoEntityMapper">
+	<resultMap id="BaseResultMap" type="com.as.filesearch.entity.NewsInfoEntity">
+		<id column="news_id" property="newsId" jdbcType="BIGINT" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="title" property="title" jdbcType="VARCHAR" />
+		<result column="image" property="image" jdbcType="VARCHAR" />
+		<result column="source" property="source" jdbcType="VARCHAR" />
+		<result column="column_id" property="columnId" jdbcType="BIGINT" />
+		<result column="reject_reason" property="rejectReason"
+			jdbcType="VARCHAR" />
+		<result column="remakes" property="remakes" jdbcType="VARCHAR" />
+		<result column="column_name" property="columnName" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="create_id" property="createId" jdbcType="BIGINT" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="modify_id" property="modifyId" jdbcType="BIGINT" />
+		<result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+		<result column="release_id" property="releaseId" jdbcType="BIGINT" />
+		<result column="release_time" property="releaseTime" jdbcType="TIMESTAMP" />
+		<result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+		<result column="version" property="version" jdbcType="INTEGER" />
+	</resultMap>
+	<resultMap id="ResultMapWithBLOBs" type="com.as.filesearch.entity.NewsInfoEntity"
+		extends="BaseResultMap">
+		<result column="content" property="content" jdbcType="LONGVARCHAR" />
+		<result column="news_introduction" property="newsIntroduction" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		news_id, name, title, image, source, column_id,
+		reject_reason, remakes,
+		column_name,
+		status, create_id, create_time,
+		modify_id, modify_time, release_id,
+		release_time,
+		is_delete, version
+	</sql>
+	<sql id="Blob_Column_List">
+		content,news_introduction
+	</sql>
+	<!-- 取查询总数(后天管理) -->
+	<select id="selectAllCountByPagination" resultType="java.lang.Integer"
+		parameterType="java.util.Map">
+		select count(*)
+		from d_news_info dni
+		where dni.is_delete = 1
+		<trim>
+			<if test="createTime_start != null and createTime_start !=''">
+				and
+				dni.create_time > #{createTime_start
+				,jdbcType=TIMESTAMP}
+			</if>
+			<if test="createTime_end != null and createTime_end !=''">
+				and #{createTime_end ,jdbcType=TIMESTAMP} >
+				dni.create_time
+
+			</if>
+			<if test="releaseTime_start != null and releaseTime_start !=''">
+				and dni.release_time > #{releaseTime_start
+				,jdbcType=TIMESTAMP}
+			</if>
+			<if test="releaseTime_end != null and releaseTime_end !=''">
+				and #{releaseTime_end ,jdbcType=TIMESTAMP} >
+				dni.release_time
+
+			</if>
+			<if test="infoStatus != null and infoStatus !=''">
+				and dni.status = #{infoStatus,jdbcType=VARCHAR}
+			</if>
+			<if test="columnId != null and columnId !=''">
+				and dni.column_id = #{columnId,jdbcType=VARCHAR}
+			</if>
+			<if test="infoName != null and infoName !=''">
+				and dni.name like CONCAT('%',
+				#{infoName,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="infoTitle != null and infoTitle !=''">
+				and dni.title like CONCAT('%',
+				#{infoTitle,jdbcType=VARCHAR},'%')
+			</if>
+
+
+		</trim>
+	</select>
+	<!-- 取分页数据 (后天管理) -->
+	<select id="selectAllByPagination" resultMap="BaseResultMap"
+		parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List" />
+		from d_news_info dni
+		where dni.is_delete = 1
+		<trim>
+			<if test="createTime_start != null and createTime_start !=''">
+				and
+				dni.create_time > #{createTime_start
+				,jdbcType=TIMESTAMP}
+			</if>
+			<if test="createTime_end != null and createTime_end !=''">
+				and #{createTime_end ,jdbcType=TIMESTAMP} >
+				dni.create_time
+
+			</if>
+			<if test="releaseTime_start != null and releaseTime_start !=''">
+				and dni.release_time > #{releaseTime_start
+				,jdbcType=TIMESTAMP}
+			</if>
+			<if test="releaseTime_end != null and releaseTime_end !=''">
+				and #{releaseTime_end ,jdbcType=TIMESTAMP} >
+				dni.release_time
+
+			</if>
+			<if test="infoStatus != null and infoStatus !=''">
+				and dni.status = #{infoStatus,jdbcType=VARCHAR}
+			</if>
+			<if test="columnId != null and columnId !=''">
+				and dni.column_id = #{columnId,jdbcType=VARCHAR}
+			</if>
+			<if test="infoName != null and infoName !=''">
+				and dni.name like CONCAT('%',
+				#{infoName,jdbcType=VARCHAR},'%')
+			</if>
+			<if test="infoTitle != null and infoTitle !=''">
+				and dni.title like CONCAT('%',
+				#{infoTitle,jdbcType=VARCHAR},'%')
+			</if>
+
+
+		</trim>
+		order by ${sortItem} ${sortOrder}
+		limit
+		#{startNum,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+	</select>
+
+	<!-- 取查询总数(前台应用) -->
+	<select id="selectAllCountByPagination_Portal" resultType="java.lang.Integer"
+		parameterType="java.util.Map">
+		select count(*)
+		from d_news_info dni
+		where dni.is_delete = 1 and
+		dni.status = 3
+		<trim>
+		   <if test="columnId != null and columnId !=''">
+			  and dni.column_id = #{columnId}
+			</if>
+			<if test="keyWords != null and keyWords !=''">
+			  and dni.title like CONCAT('%',#{keyWords},'%')
+			</if>
+		</trim>
+	</select>
+	<!-- 取分页数据 (前台应用) -->
+	<select id="selectAllByPagination_Portal" resultMap="ResultMapWithBLOBs"
+		parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List" />
+		,
+		news_introduction
+		from d_news_info dni
+		where dni.is_delete = 1 and dni.status = 3
+		<trim>
+		    <if test="columnId != null and columnId !=''">
+			  and dni.column_id = #{columnId}
+			</if>
+			<if test="keyWords != null and keyWords !=''">
+			  and  dni.title like CONCAT('%',#{keyWords},'%')
+			</if>
+		</trim>
+		order by
+		${sortItem} ${sortOrder}
+		limit
+		#{startNum,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from d_news_info
+		where news_id = #{newsId,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		d_news_info
+		where news_id = #{newsId,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByPrimaryKeys" parameterType="java.lang.Long">
+		update d_news_info
+		set is_delete = 0
+		where news_id in
+		<foreach item="idItem" collection="array" open="(" separator=","
+			close=")">
+			#{idItem}
+		</foreach>
+	</delete>
+	<insert id="insert" parameterType="com.as.filesearch.entity.NewsInfoEntity">
+		insert into d_news_info
+		(news_id, name, title,
+		image, source, column_id,
+		reject_reason, remakes,
+		column_name,
+		status, create_id, create_time,
+		modify_id, modify_time,
+		release_id,
+		release_time, is_delete, version,
+		content,news_introduction)
+		values
+		(#{newsId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},
+		#{title,jdbcType=VARCHAR},
+		#{image,jdbcType=VARCHAR},
+		#{source,jdbcType=VARCHAR}, #{columnId,jdbcType=BIGINT},
+		#{rejectReason,jdbcType=VARCHAR}, #{remakes,jdbcType=VARCHAR},
+		#{columnName,jdbcType=VARCHAR},
+		#{status,jdbcType=INTEGER},
+		#{createId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP},
+		#{modifyId,jdbcType=BIGINT}, #{modifyTime,jdbcType=TIMESTAMP},
+		#{releaseId,jdbcType=BIGINT},
+		#{releaseTime,jdbcType=TIMESTAMP},
+		#{isDelete,jdbcType=INTEGER}, #{version,jdbcType=INTEGER},
+		#{content,jdbcType=LONGVARCHAR},#{newsIntroduction,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.as.filesearch.entity.NewsInfoEntity">
+		insert into d_news_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="newsId != null">
+				news_id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="image != null">
+				image,
+			</if>
+			<if test="source != null">
+				source,
+			</if>
+			<if test="columnId != null">
+				column_id,
+			</if>
+			<if test="rejectReason != null">
+				reject_reason,
+			</if>
+			<if test="remakes != null">
+				remakes,
+			</if>
+			<if test="columnName != null">
+				column_name,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="createId != null">
+				create_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="modifyId != null">
+				modify_id,
+			</if>
+			<if test="modifyTime != null">
+				modify_time,
+			</if>
+			<if test="releaseId != null">
+				release_id,
+			</if>
+			<if test="releaseTime != null">
+				release_time,
+			</if>
+			<if test="isDelete != null">
+				is_delete,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+			<if test="content != null">
+				content,
+			</if>
+			<if test="content != null">
+				content,
+			</if>
+			<if test="content != null">
+				news_introduction,
+			</if>
+			
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="newsId != null">
+				#{newsId,jdbcType=BIGINT},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="image != null">
+				#{image,jdbcType=VARCHAR},
+			</if>
+			<if test="source != null">
+				#{source,jdbcType=VARCHAR},
+			</if>
+			<if test="columnId != null">
+				#{columnId,jdbcType=BIGINT},
+			</if>
+			<if test="rejectReason != null">
+				#{rejectReason,jdbcType=VARCHAR},
+			</if>
+			<if test="remakes != null">
+				#{remakes,jdbcType=VARCHAR},
+			</if>
+			<if test="columnName != null">
+				#{columnName,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="createId != null">
+				#{createId,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyId != null">
+				#{modifyId,jdbcType=BIGINT},
+			</if>
+			<if test="modifyTime != null">
+				#{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="releaseId != null">
+				#{releaseId,jdbcType=BIGINT},
+			</if>
+			<if test="releaseTime != null">
+				#{releaseTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isDelete != null">
+				#{isDelete,jdbcType=INTEGER},
+			</if>
+			<if test="version != null">
+				#{version,jdbcType=INTEGER},
+			</if>
+			<if test="content != null">
+				#{content,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="content != null">
+				#{newsIntroduction,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.as.filesearch.entity.NewsInfoEntity">
+		update d_news_info
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="image != null">
+				image = #{image,jdbcType=VARCHAR},
+			</if>
+			<if test="source != null">
+				source = #{source,jdbcType=VARCHAR},
+			</if>
+			<if test="columnId != null">
+				column_id = #{columnId,jdbcType=BIGINT},
+			</if>
+			<if test="rejectReason != null">
+				reject_reason = #{rejectReason,jdbcType=VARCHAR},
+			</if>
+			<if test="remakes != null">
+				remakes = #{remakes,jdbcType=VARCHAR},
+			</if>
+			<if test="columnName != null">
+				column_name = #{columnName,jdbcType=VARCHAR},
+			</if>
+			<!-- 此处是更新到了发布状态，不用置空发布人和发布时间 -->
+			<if test="status != null and status == 3">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<!-- 此出是更新到了未发布状态，故需要把发布人和发布时间置为空 -->
+			<if test="status != null  and status != 3">
+				status = #{status,jdbcType=INTEGER},
+				release_id = null,
+				release_time = null,
+			</if>
+			<if test="createId != null">
+				create_id = #{createId,jdbcType=BIGINT},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyId != null">
+				modify_id = #{modifyId,jdbcType=BIGINT},
+			</if>
+			<if test="modifyTime != null">
+				modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="releaseId != null">
+				release_id = #{releaseId,jdbcType=BIGINT},
+			</if>
+			<if test="releaseTime != null">
+				release_time = #{releaseTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isDelete != null">
+				is_delete = #{isDelete,jdbcType=INTEGER},
+			</if>
+			<if test="version != null">
+				version = #{version,jdbcType=INTEGER},
+			</if>
+			<if test="content != null">
+				content = #{content,jdbcType=LONGVARCHAR},
+			</if>
+			<if test="content != null">
+				news_introduction = #{newsIntroduction,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where news_id = #{newsId,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.as.filesearch.entity.NewsInfoEntity">
+		update
+		d_news_info
+		set name = #{name,jdbcType=VARCHAR},
+		title =
+		#{title,jdbcType=VARCHAR},
+		image = #{image,jdbcType=VARCHAR},
+		source =
+		#{source,jdbcType=VARCHAR},
+		column_id = #{columnId,jdbcType=BIGINT},
+		reject_reason = #{rejectReason,jdbcType=VARCHAR},
+		remakes =
+		#{remakes,jdbcType=VARCHAR},
+		column_name =
+		#{columnName,jdbcType=VARCHAR},
+		status = #{status,jdbcType=INTEGER},
+		create_id = #{createId,jdbcType=BIGINT},
+		create_time =
+		#{createTime,jdbcType=TIMESTAMP},
+		modify_id =
+		#{modifyId,jdbcType=BIGINT},
+		modify_time =
+		#{modifyTime,jdbcType=TIMESTAMP},
+		release_id =
+		#{releaseId,jdbcType=BIGINT},
+		release_time =
+		#{releaseTime,jdbcType=TIMESTAMP},
+		is_delete =
+		#{isDelete,jdbcType=INTEGER},
+		version = #{version,jdbcType=INTEGER},
+		content = #{content,jdbcType=LONGVARCHAR},
+		news_introduction = #{newsIntroduction,jdbcType=LONGVARCHAR}
+		where news_id =
+		#{newsId,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.as.filesearch.entity.NewsInfoEntity">
+		update d_news_info
+		set name = #{name,jdbcType=VARCHAR},
+		title = #{title,jdbcType=VARCHAR},
+		image = #{image,jdbcType=VARCHAR},
+		source = #{source,jdbcType=VARCHAR},
+		column_id = #{columnId,jdbcType=BIGINT},
+		reject_reason =
+		#{rejectReason,jdbcType=VARCHAR},
+		remakes =
+		#{remakes,jdbcType=VARCHAR},
+		column_name =
+		#{columnName,jdbcType=VARCHAR},
+		status = #{status,jdbcType=INTEGER},
+		create_id = #{createId,jdbcType=BIGINT},
+		create_time =
+		#{createTime,jdbcType=TIMESTAMP},
+		modify_id =
+		#{modifyId,jdbcType=BIGINT},
+		modify_time =
+		#{modifyTime,jdbcType=TIMESTAMP},
+		release_id =
+		#{releaseId,jdbcType=BIGINT},
+		release_time =
+		#{releaseTime,jdbcType=TIMESTAMP},
+		is_delete =
+		#{isDelete,jdbcType=INTEGER},
+		version = #{version,jdbcType=INTEGER}
+		where news_id = #{newsId,jdbcType=BIGINT}
+	</update>
+</mapper>

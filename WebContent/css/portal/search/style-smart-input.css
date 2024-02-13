@@ -1,0 +1,42 @@
+/* 智能输入框 */
+span.spanTextDropdown {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 150px;
+	/* height: 250px; */
+	z-index: 1000;
+	background-color: #fff;
+	border: 1px solid #DBDBDB;
+	overflow: hidden; /*auto*/
+	display: none;
+	word-wrap: normal;
+	white-space:nowrap;
+}
+
+span.spanMatchText {
+	text-decoration: underline;
+	font-weight: bold;
+	font-size: 0.8em;
+}
+
+span.spanNormalElement {
+	display: block;
+	height: 25px;
+	line-height: 25px;
+	background: #fff;
+	color: #333;
+	font-size: 0.8em;
+	white-space:nowrap;text-overflow:ellipsis;-moz-text-overflow: ellipsis; overflow:hidden;display: block;
+	
+}
+
+span.spanHighElement {
+	display: block;
+	height: 25px;
+	line-height: 25px;
+	background: #ccc;
+	color: white;
+	cursor: pointer;
+	font-size: 0.8em;
+}

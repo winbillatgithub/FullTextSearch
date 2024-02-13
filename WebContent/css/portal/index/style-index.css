@@ -1,0 +1,56 @@
+#main-container {
+	max-width: 100%;
+	height: 400px;
+	background-color: #49ab84;
+	padding-top: 50px;
+	margin: 0;
+	clear: both;
+	text-align: center; /*设置主面板内容居中*/
+	overflow: hidden;
+}
+
+#main-container h1 {
+	color: #ffffff;
+	font-size: 50px;
+}
+
+#main-search-container {
+	
+}
+
+#main-search-file-form {
+	display: inline;
+}
+
+input[id="key-word-input"] {
+	height: 50px;
+	width: 650px;
+	border: 0px;
+	border-radius: 5px;
+	line-height: 40px;
+	font-size: 14px;
+	font-family: "Nunito", sans-serif;
+	font-weight: normal;
+	color: #6e6c6c;
+	padding-left:15px;
+}
+
+#key-work-search-button {
+	/* position使用相对定位，以便按钮能够现在在输入框里面*/
+	position: relative;
+	left: -60px;
+	border-radius: 5px;
+	/* top: -3.5px; */
+	font-size: 0.8em;
+	color: #ffffff;
+	border: none;
+	width: 50px;
+	height: 44px;
+	background-color: #7f7f7f;
+
+}
+/*鼠标移动到搜索按钮的时候，变色，并且显示手型工具*/
+#key-work-search-button:hover {
+	background-color: #bebcc5;
+	cursor: pointer;
+}

@@ -1,0 +1,64 @@
+html {
+	font-family: sans-serif;
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+}
+
+body {
+	margin: 0;
+	background: #49ab84;
+	padding: 0;
+}
+
+div{
+	margin: 0;
+	padding: 0;
+}
+
+em{
+	color:red;
+	 font-style:normal
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup,
+	main, nav, section, summary {
+	display: block;
+}
+
+/* 去掉在IE中input的“×”提示*/
+/* ::-ms-clear {
+	display: none;
+} */
+
+.clearBoth {
+	clear: both;
+	height: 1px;
+	margin-top: -1px;
+	overflow: hidden;
+}
+/*
+ * For showing formatted legal instrument
+ */
+.div_leftstyle {
+	text-indent: 2em; !important;
+	line-height: 2em;
+	padding:10px 0;
+}
+.div_rightstyle {
+	text-indent: 2em; !important;
+	line-height: 25px;
+	text-align: right;
+	padding:2px 0;
+}
+.div_centerstyle {
+	line-height: 2em;
+	font-weight:bold;
+	font-size: 19px;
+	text-align: center;
+	padding:5px 0;
+}
+.div_normstyle {
+	text-indent: 2em; !important;
+	line-height: 2em;
+	padding:10px 0;
+}

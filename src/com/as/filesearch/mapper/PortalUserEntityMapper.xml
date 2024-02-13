@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.as.filesearch.mapper.PortalUserEntityMapper">
+	<resultMap id="BaseResultMap" type="com.as.filesearch.entity.PortalUserEntity">
+		<result column="user_id" jdbcType="BIGINT" property="userId" />
+		<result column="username" jdbcType="VARCHAR" property="username" />
+		<result column="password" jdbcType="VARCHAR" property="password" />
+		<result column="user_type" jdbcType="CHAR" property="userType" />
+		<result column="is_first_login" jdbcType="VARCHAR" property="isFirstLogin" />
+		<result column="create_id" jdbcType="VARCHAR" property="createId" />
+		<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+		<result column="modify_id" jdbcType="VARCHAR" property="modifyId" />
+		<result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+		<result column="is_disable" jdbcType="VARCHAR" property="isDisable" />
+		<result column="is_delete" jdbcType="VARCHAR" property="isDelete" />
+		<result column="version" jdbcType="VARCHAR" property="version" />
+		<result column="email" jdbcType="VARCHAR" property="email" />
+		<result column="gender" jdbcType="CHAR" property="gender" />
+		<result column="phone" jdbcType="VARCHAR" property="phone" />
+		<result column="birthday" jdbcType="VARCHAR" property="birthday" />
+		<result column="contact_name" jdbcType="VARCHAR" property="contactName" />
+		<result column="image_url" jdbcType="VARCHAR" property="imageUrl" />
+		<result column="comment" jdbcType="VARCHAR" property="comment" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		user_id, username, password,
+		user_type, is_first_login,
+		create_id,
+		create_time, modify_id, modify_time,
+		is_disable, is_delete,
+		version,
+		email, gender, phone,
+		birthday, contact_name, image_url,
+		comment
+	</sql>
+	<!-- 取查询总数 -->
+	<select id="selectAllCountByPagination" resultType="java.lang.Integer"
+		parameterType="java.util.Map">
+		select count(*)
+		from u_portal_user pu
+		<!-- where pu.is_delete = '1' -->
+		where 1=1
+		<trim>
+			<if test="userName != null and userName !=''">
+				and pu.username like CONCAT('%',#{userName},'%')
+			</if>
+			<if test="contactName != null and contactName !=''">
+				and pu.contact_name like CONCAT('%',#{contactName},'%')
+			</if>
+			<if test="genderSelect != null and genderSelect !=''">
+				and pu.gender = #{genderSelect,jdbcType=VARCHAR}
+			</if>
+			<if test="isDisable != null and isDisable !=''">
+				and pu.is_disable = #{isDisable,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</select>
+	<!-- 取分页数据 -->
+	<select id="selectAllByPagination" resultMap="BaseResultMap"
+		parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List" />
+		from u_portal_user pu
+		<!-- where pu.is_delete = '1' -->
+		where 1=1
+		<trim>
+			<if test="userName != null and userName !=''">
+				and pu.username like CONCAT('%',#{userName},'%')
+			</if>
+			<if test="contactName != null and contactName !=''">
+				and pu.contact_name like CONCAT('%',#{contactName},'%')
+			</if>
+			<if test="genderSelect != null and genderSelect !=''">
+				and pu.gender = #{genderSelect,jdbcType=VARCHAR}
+			</if>
+			<if test="isDisable != null and isDisable !=''">
+				and pu.is_disable = #{isDisable,jdbcType=VARCHAR}
+			</if>
+		</trim>
+		order by ${sortItem} ${sortOrder}
+		limit
+		#{startNum,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from u_portal_user upu
+		where upu.is_delete = '1' and upu.user_id =
+		#{id}
+	</select>
+	<select id="checkUserName" resultMap="BaseResultMap"
+		parameterType="java.util.Map">
+		select
+		<include refid="Base_Column_List" />
+		from u_portal_user pu
+		where pu.is_delete = '1'
+		<trim>
+			<if test="userName != null and userName !=''">
+				and pu.username = #{userName,jdbcType=VARCHAR}
+			</if>
+			<if test="userId != null and userId !=''">
+				and pu.user_id != #{userId,jdbcType=BIGINT}
+			</if>
+		</trim>
+	</select>
+	<select id="selectByUserName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from u_portal_user upu
+		where upu.is_delete = '1' and upu.username =
+		#{loginUserName,jdbcType=VARCHAR}
+	</select>
+	<select id="loginWithUserNameOrEmail" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from u_portal_user upu
+		where upu.is_delete = '1' and
+		( upu.email = #{loginUserName,jdbcType=VARCHAR}
+		or upu.username = #{loginUserName,jdbcType=VARCHAR}
+		)
+	</select>
+	<delete id="deleteByPrimaryKeys" parameterType="java.lang.Integer">
+		update u_portal_user
+		set is_delete = '0'
+		where user_id in
+		<foreach item="idItem" collection="array" open="(" separator=","
+			close=")">
+			#{idItem}
+		</foreach>
+	</delete>
+
+	<insert id="insert" parameterType="com.as.filesearch.entity.PortalUserEntity">
+		insert into u_portal_user
+		(
+		username, password,
+		user_type, is_first_login, create_id,
+		create_time,
+		modify_id, modify_time,
+		is_disable, is_delete, version,
+		email, gender,
+		phone,
+		birthday, contact_name, image_url,
+		comment)
+		values
+		(
+		#{username,jdbcType=VARCHAR},
+		#{password,jdbcType=VARCHAR},
+		#{userType,jdbcType=CHAR},
+		#{isFirstLogin,jdbcType=DOUBLE},
+		#{createId,jdbcType=DOUBLE},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{modifyId,jdbcType=DOUBLE},
+		#{modifyTime,jdbcType=TIMESTAMP},
+		#{isDisable,jdbcType=DOUBLE},
+		#{isDelete,jdbcType=DOUBLE},
+		#{version,jdbcType=DOUBLE},
+		#{email,jdbcType=VARCHAR},
+		#{gender,jdbcType=CHAR},
+		#{phone,jdbcType=VARCHAR},
+		#{birthday,jdbcType=VARCHAR},
+		#{contactName,jdbcType=VARCHAR},
+		#{imageUrl,jdbcType=VARCHAR},
+		#{comment,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.as.filesearch.entity.PortalUserEntity">
+		insert into u_portal_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="username != null">
+				username,
+			</if>
+			<if test="password != null">
+				password,
+			</if>
+			<if test="userType != null">
+				user_type,
+			</if>
+			<if test="isFirstLogin != null">
+				is_first_login,
+			</if>
+			<if test="createId != null">
+				create_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="modifyId != null">
+				modify_id,
+			</if>
+			<if test="modifyTime != null">
+				modify_time,
+			</if>
+			<if test="isDisable != null">
+				is_disable,
+			</if>
+			<if test="isDelete != null">
+				is_delete,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="gender != null">
+				gender,
+			</if>
+			<if test="phone != null">
+				phone,
+			</if>
+			<if test="birthday != null">
+				birthday,
+			</if>
+			<if test="contactName != null">
+				contact_name,
+			</if>
+			<if test="imageUrl != null">
+				image_url,
+			</if>
+			<if test="comment != null">
+				comment,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="username != null">
+				#{username,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				#{password,jdbcType=VARCHAR},
+			</if>
+			<if test="userType != null">
+				#{userType,jdbcType=CHAR},
+			</if>
+			<if test="isFirstLogin != null">
+				#{isFirstLogin,jdbcType=DOUBLE},
+			</if>
+			<if test="createId != null">
+				#{createId,jdbcType=DOUBLE},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyId != null">
+				#{modifyId,jdbcType=DOUBLE},
+			</if>
+			<if test="modifyTime != null">
+				#{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isDisable != null">
+				#{isDisable,jdbcType=DOUBLE},
+			</if>
+			<if test="isDelete != null">
+				#{isDelete,jdbcType=DOUBLE},
+			</if>
+			<if test="version != null">
+				#{version,jdbcType=DOUBLE},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="gender != null">
+				#{gender,jdbcType=CHAR},
+			</if>
+			<if test="phone != null">
+				#{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="birthday != null">
+				#{birthday,jdbcType=VARCHAR},
+			</if>
+			<if test="contactName != null">
+				#{contactName,jdbcType=VARCHAR},
+			</if>
+			<if test="imageUrl != null">
+				#{imageUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="comment != null">
+				#{comment,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	
+	<insert id="registerUser" parameterType="com.as.filesearch.entity.PortalUserEntity">
+		insert into u_portal_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="username != null">
+				username,
+			</if>
+			<if test="password != null">
+				password,
+			</if>
+			<if test="userType != null">
+				user_type,
+			</if>
+			<if test="isFirstLogin != null">
+				is_first_login,
+			</if>
+			<if test="createId != null">
+				create_id,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="modifyId != null">
+				modify_id,
+			</if>
+			<if test="modifyTime != null">
+				modify_time,
+			</if>
+			<if test="isDisable != null">
+				is_disable,
+			</if>
+			<if test="isDelete != null">
+				is_delete,
+			</if>
+			<if test="version != null">
+				version,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="gender != null">
+				gender,
+			</if>
+			<if test="phone != null">
+				phone,
+			</if>
+			<if test="birthday != null">
+				birthday,
+			</if>
+			<if test="contactName != null">
+				contact_name,
+			</if>
+			<if test="imageUrl != null">
+				image_url,
+			</if>
+			<if test="comment != null">
+				comment,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="username != null">
+				#{username,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				#{password,jdbcType=VARCHAR},
+			</if>
+			<if test="userType != null">
+				#{userType,jdbcType=CHAR},
+			</if>
+			<if test="isFirstLogin != null">
+				#{isFirstLogin,jdbcType=DOUBLE},
+			</if>
+			<if test="createId != null">
+				#{createId,jdbcType=DOUBLE},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyId != null">
+				#{modifyId,jdbcType=DOUBLE},
+			</if>
+			<if test="modifyTime != null">
+				#{modifyTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="isDisable != null">
+				#{isDisable,jdbcType=DOUBLE},
+			</if>
+			<if test="isDelete != null">
+				#{isDelete,jdbcType=DOUBLE},
+			</if>
+			<if test="version != null">
+				#{version,jdbcType=DOUBLE},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="gender != null">
+				#{gender,jdbcType=CHAR},
+			</if>
+			<if test="phone != null">
+				#{phone,jdbcType=VARCHAR},
+			</if>
+			<if test="birthday != null">
+				#{birthday,jdbcType=VARCHAR},
+			</if>
+			<if test="contactName != null">
+				#{contactName,jdbcType=VARCHAR},
+			</if>
+			<if test="imageUrl != null">
+				#{imageUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="comment != null">
+				#{comment,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKey" parameterType="com.as.filesearch.entity.PortalUserEntity">
+		update
+		u_portal_user
+		set username = #{username,jdbcType=VARCHAR},
+		password =
+		#{password,jdbcType=VARCHAR},
+		user_type = #{userType,jdbcType=CHAR},
+		is_first_login = #{isFirstLogin,jdbcType=DOUBLE},
+		create_id
+		=#{createId,jdbcType=DOUBLE},
+		create_time
+		=#{createTime,jdbcType=TIMESTAMP},
+		modify_id =
+		#{modifyId,jdbcType=DOUBLE},
+		modify_time =
+		#{modifyTime,jdbcType=TIMESTAMP},
+		is_disable =
+		#{isDisable,jdbcType=DOUBLE},
+		version = #{version,jdbcType=DOUBLE},
+		email = #{email,jdbcType=VARCHAR},
+		gender = #{gender,jdbcType=CHAR},
+		phone = #{phone,jdbcType=VARCHAR},
+		birthday =
+		#{birthday,jdbcType=VARCHAR},
+		contact_name =
+		#{contactName,jdbcType=VARCHAR},
+		image_url =
+		#{imageUrl,jdbcType=VARCHAR},
+		comment = #{comment,jdbcType=VARCHAR}
+		where user_id
+		= #{userId,jdbcType=INTEGER}
+	</update>
+	<update id="updateUserDetail" parameterType="java.util.Map">
+		update
+		u_portal_user
+		set username = #{userName,jdbcType=VARCHAR},
+		gender = #{gender,jdbcType=CHAR},
+		phone = #{phone,jdbcType=VARCHAR},
+		comment = #{comment,jdbcType=VARCHAR}
+		where user_id
+		= #{userId,jdbcType=INTEGER}
+	</update>
+	<update id="updateUserPassword" parameterType="java.util.Map">
+		update
+		u_portal_user
+		set password = #{password,jdbcType=VARCHAR}
+		where user_id
+		= #{userId,jdbcType=INTEGER}
+	</update>
+</mapper>

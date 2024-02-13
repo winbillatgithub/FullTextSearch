@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.as.filesearch.mapper.UploadedFileInfoEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.as.filesearch.entity.UploadedFileInfoEntity" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="filename" property="filename" jdbcType="VARCHAR" />
+    <result column="filesize" property="filesize" jdbcType="INTEGER" />
+    <result column="filetype" property="filetype" jdbcType="VARCHAR" />
+    <result column="createdate" property="createdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, filename, filesize, filetype, createdate
+  </sql>
+
+  <!-- 取查询总数 -->
+  <select id="selectAllCount" resultType="java.lang.Integer"
+	parameterType="java.util.Map">
+	select count(*)
+	from d_file_info 
+	<trim prefix="WHERE" prefixOverrides="AND|OR">
+      	<if test="id != null and id != '' ">
+            AND id = #{id, jdbcType=VARCHAR}
+        </if>
+		<if test="fileName != null and fileName != '' and (accurate = null or accurate = '') ">
+			AND filename LIKE CONCAT(CONCAT('%', #{fileName, jdbcType=VARCHAR}),'%')
+		</if>
+		<if test="fileName != null and fileName != '' and (accurate != null and accurate != '') ">
+			AND filename = #{fileName, jdbcType=VARCHAR}
+		</if>
+      	<if test="fileType != null and fileType != '' ">  
+            AND filetype = #{fileType, jdbcType=VARCHAR}
+        </if>
+	</trim>
+  </select>
+  <!-- 取分页数据 -->
+  <select id="selectAllByPagination" resultMap="BaseResultMap"
+	parameterType="java.util.Map">
+	select
+	<include refid="Base_Column_List" />
+	from d_file_info
+	<trim prefix="WHERE" prefixOverrides="AND|OR">
+      	<if test="id != null and id != '' ">
+            AND id = #{id, jdbcType=VARCHAR}
+        </if>
+		<if test="fileName != null and fileName != '' and (accurate = null or accurate = '') ">
+			AND filename LIKE CONCAT(CONCAT('%', #{fileName, jdbcType=VARCHAR}),'%')
+		</if>
+		<if test="fileName != null and fileName != '' and (accurate != null and accurate != '') ">
+			AND filename = #{fileName, jdbcType=VARCHAR}
+		</if>
+      	<if test="fileType != null and fileType != '' ">  
+            AND filetype = #{fileType, jdbcType=VARCHAR}
+        </if>
+	</trim>
+	order by createdate desc
+	limit
+	#{startNum,jdbcType=INTEGER},#{pageSize,jdbcType=INTEGER}
+
+  </select>
+
+  <select id="selectAll"  resultMap="BaseResultMap">
+     select 
+    <include refid="Base_Column_List" />
+    from d_file_info
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from d_file_info
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from d_file_info
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.as.filesearch.entity.UploadedFileInfoEntity" >
+    insert into d_file_info (id, filename, filesize, 
+      filetype, createdate)
+    values (#{id,jdbcType=VARCHAR}, #{filename,jdbcType=VARCHAR}, #{filesize,jdbcType=INTEGER}, 
+      #{filetype,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.as.filesearch.entity.UploadedFileInfoEntity" >
+    insert into d_file_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="filename != null" >
+        filename,
+      </if>
+      <if test="filesize != null" >
+        filesize,
+      </if>
+      <if test="filetype != null" >
+        filetype,
+      </if>
+      <if test="createdate != null" >
+        createdate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="filename != null" >
+        #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="filesize != null" >
+        #{filesize,jdbcType=INTEGER},
+      </if>
+      <if test="filetype != null" >
+        #{filetype,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.as.filesearch.entity.UploadedFileInfoEntity" >
+    update d_file_info
+    <set >
+      <if test="filename != null" >
+        filename = #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="filesize != null" >
+        filesize = #{filesize,jdbcType=INTEGER},
+      </if>
+      <if test="filetype != null" >
+        filetype = #{filetype,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        createdate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.as.filesearch.entity.UploadedFileInfoEntity" >
+    update d_file_info
+    set filename = #{filename,jdbcType=VARCHAR},
+      filesize = #{filesize,jdbcType=INTEGER},
+      filetype = #{filetype,jdbcType=VARCHAR},
+      createdate = #{createdate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

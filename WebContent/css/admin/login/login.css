@@ -1,0 +1,47 @@
+.login {
+	background: #c0c0c0;
+	width: 700px;
+	height: 400px;
+	border: 2px solid #000000;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+	padding: 10px 20px 20px 20px;
+	-moz-border-radius: 4px 4px 0 0;
+	-webkit-border-radius: 4px 4px 0 0;
+	border-radius: 4px 4px 0 0;
+	/* overflow: hidden; */
+	-moz-box-shadow: 5px 5px 10px #aaa;
+	-webkit-box-shadow: 5px 5px 10px #aaa;
+	box-shadow: 5px 5px 10px #aaa;
+	z-index: 10000
+}
+
+.blank {
+	float: left;
+}
+
+.left {
+	float: left;
+	margin: 130px 0 130px 100px;
+}
+
+.formList {
+	float: left;
+	margin: 100px 0 100px 20px;
+}
+
+.formList .item {
+	padding-top: 5px;
+}
+
+.formList .loginItem{
+	padding-top:10px;
+}
+#errorTxt{
+	font-size:20px;color:#ff0000;
+	height:40px;
+}

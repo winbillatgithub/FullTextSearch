@@ -1,0 +1,111 @@
+/* 最外层的容器 */
+#center-container {
+	max-width: 100%;
+	/* background-color: #49ab84; */
+	clear: both;
+	margin: 0;
+}
+/* 当前网站的位置 */
+#current-location {
+	clear: both;
+	background-color: #f5f8fa;
+	padding: 20px 0 20px 40px;
+	margin: 0;
+}
+
+
+
+#current-location a,a:visited{
+	text-decoration: none;
+	font-family: "Nunito", sans-serif;
+	font-weight: normal;
+	line-height: 24px;
+	color: #49ab84;;
+}
+
+/* 用户信息容器 */
+#user-container {
+	clear: both;
+	padding-left: 50px;
+	margin: 0;
+	/* background-color: #ffffff; */
+}
+
+#user-container .sideBar{
+	float:left;
+}
+
+/* 新闻容器 --搜索 */
+#user-container .maindiv {
+	margin-top:20px;
+	float: left;
+	padding-left: 100px;
+}
+
+#user-container .uptSuc {
+	height: 125px;
+	padding: 40px 20px 0;
+	text-align: left;
+	font-size: 14px;
+}
+
+#user-container .updateButton,.turnToLogin {
+	padding-top: 20px;
+}
+
+
+.maindiv .item{ line-height:30px; margin-bottom:10px; padding-left:20px;min-height:30px; _height:30px;}
+.maindiv .item .label{ display:block; float:left; width:95px; padding-right:5px; margin-left:-100px; _display:inline; text-align:right;}
+.maindiv .item .item-bd{ min-height:30px; _height:30px;}
+
+.checkTxt{
+	font-size: 12;
+	color:red;
+}
+
+.btnUpdate {
+	background-color: #48a176;
+	width: 100px;
+	height: 50px;
+	font-size: 22;
+	color:#ffffff;
+	border: 0px;
+	cursor: pointer;
+	border-radius: 8px;
+	-moz-border-radius: 8px; /* Gecko browsers */
+	-webkit-border-radius: 8px; /* Webkit browsers */
+}
+
+/*sideBar*/
+.sideBar{ width:178px; float:left; margin-top:20px; border-style:solid; border-color:#49ab84; border-width:1px; padding-top:1px; _height:400px; min-height:400px;}
+.sideNav li{ position:relative; overflow:hidden; zoom:1; background:url(../../../images/user/side_bg.png) bottom center no-repeat; margin-left:0px;margin-top:-1px;}
+.sideNav .last{ background:none;}
+.sideNav a{ display:block; padding-left:18px; height:54px; line-height:54px; font-size:14px; color:#333}
+.sideNav .down li{ background:none}
+.sideNav .down a{ /*padding-left:38px;*/ color:#666}
+.sideNav h2{ background:url(../../../images/user/side_bg.png) bottom center no-repeat; position:relative}
+.sideNav h2 b{ display:block; width:14px; height:7px; position:absolute; top:25px; right:20px;}
+.sideNav .current{ background:#fff; border-left-style:solid; border-left-width:4px; padding-left:14px;}
+.sideNav .down a:hover,.sideNav .down .current{ padding-left:34px;}
+.sideNav a:hover{background:#fff; border-left:4px solid #fff; padding-left:14px;}
+.sideNav .down{ display:none}
+.sideNav .open .down{ display:block}
+
+/* #btnRegister:disabled{
+	background-color: #ffffff;
+} */
+
+.upt .uptSuc .btn122 {
+	margin-top: 20px;
+}
+
+.errorTxt {
+	margin-left: 160px;
+	color: #f00;
+}
+
+.successTxt {
+	margin-left: 160px;
+	color: #0AEE55;
+	margin-top: 0px;
+}

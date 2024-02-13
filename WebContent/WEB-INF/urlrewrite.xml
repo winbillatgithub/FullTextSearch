@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 2.6//EN" 
+"http://tuckey.org/res/dtds/urlrewrite2.6.dtd">
+<urlrewrite>
+	
+	<!-- 首页 -->
+    <rule>
+    	<from>^/index.html</from>
+    	<to type="forward">
+    	 /portal/index/index
+    	</to>
+    </rule>
+    
+    <!-- 文件搜索List -->
+    <rule>
+    	<from>^/docList.html</from>
+    	<to type="forward">
+    	 /portal/searchfile/searchFile/searchFile
+    	</to>
+    </rule>
+ 
+     <!-- 文件搜索明细 -->
+    <rule>
+    	<from>^/docDetail.html</from>
+    	<to type="forward">
+    	 /portal/searchfile/showDetailFile/showDetailDoc
+    	</to>
+    </rule>   
+    
+    <!-- 典型案例 -->
+    <rule>
+    	<from>^/typical.html</from>
+    	<to type="forward">
+    	 /portal/searchfile/searchFile/typical
+    	</to>
+    </rule>
+
+    <!-- 案由查找 -->
+    <rule>
+    	<from>^/cause.html</from>
+    	<to type="forward">
+    	 /portal/searchfile/searchFile/cause
+    	</to>
+    </rule>
+
+    <!-- 当事人查找 -->
+    <rule>
+    	<from>^/litigant.html</from>
+    	<to type="forward">
+    	 /portal/searchfile/searchFile/litigant
+    	</to>
+    </rule>
+
+    <!-- 法院、法官查找 -->
+    <rule>
+    	<from>^/court.html</from>
+    	<to type="forward">
+    	 /portal/searchfile/searchFile/court
+    	</to>
+    </rule>
+
+    <!-- 新闻列表页面 -->
+       <rule>
+		<from>^/newsList.html</from>
+		<to type="forward">
+			/portal/news/newsList/index
+		</to>
+	</rule>
+	<!-- 新闻页明细页面 -->
+	<rule>
+		<from>^/newsDetail.html</from>
+		<to type="forward">
+			/portal/news/newsDetail/index
+		</to>
+	</rule>
+	
+	<!-- 登陆 -->
+	<rule>
+		<from>^/login.html</from>
+		<to type="forward">
+			/portal/login/login/loginIndex
+		</to>
+	</rule>
+	
+	<!-- 注册 -->
+	<rule>
+		<from>^/register.html</from>
+		<to type="forward">
+			/portal/login/register/registerIndex
+		</to>
+	</rule>
+	<rule>
+		<from>^/terms.html</from>
+		<to type="forward">
+			/portal/login/register/terms
+		</to>
+	</rule>
+
+	<!-- 联系我们   -->
+	<rule>
+		<from>^/contactus.html</from>
+		<to type="forward">
+			/portal/contact/contactus/contactusIndex
+		</to>
+	</rule>
+
+	<!-- 自助服务    -->
+	<rule>
+		<from>^/member.html</from>
+		<to type="forward">
+			/portal/user/selfservice/personalInfo
+		</to>
+	</rule>
+	<rule>
+		<from>^/member_edit.html</from>
+		<to type="forward">
+			/portal/user/selfservice/editInfo
+		</to>
+	</rule>
+	<rule>
+		<from>^/password_edit.html</from>
+		<to type="forward">
+			/portal/user/selfservice/editPassword
+		</to>
+	</rule>
+	<rule>
+		<from>^/logout.html</from>
+		<to type="forward">
+			/portal/user/selfservice/logout
+		</to>
+	</rule>
+</urlrewrite>

@@ -1,0 +1,92 @@
+/* 最外层的容器 */
+#center-container {
+	max-width: 100%;
+	background-color: #49ab84;
+	clear: both;
+	margin: 0;
+}
+/* 当前网站的位置 */
+#current-location {
+	clear: both;
+	background-color: #f5f8fa;
+	padding: 20px 0 20px 40px;
+	margin: 0;
+}
+#current-location a,a:visited{
+	text-decoration: none;
+	font-family: "Nunito", sans-serif;
+	font-weight: normal;
+	line-height: 24px;
+	color: #49ab84;;
+}
+
+#current-location span.searchWords{
+	/* color:blue;  */
+	font-size: 13px;
+}
+
+/* 新闻容器 */
+#news-container {
+	clear: both;
+	padding-left: 50px;
+	margin: 0;
+	/* background-color: #ffffff; */
+}
+
+
+/* 新闻容器 --搜索 */
+#news-container #search-and-newscolumn {
+	/* float: right;
+	padding-right: 100px; */
+	float: left;
+	padding-left: 100px;
+}
+
+#search-container {
+	clear: both;
+	background-color: #f5f8fa;
+	padding: 20px 40px 20px 40px;
+	margin: 20px;
+}
+
+#search-container .input-search {
+	height: 30px;
+	width: 150px;
+	border-radius: 4px;
+	line-height: 30px;
+	font-size: 25px;
+}
+
+#newscolumn-container {
+	clear: both;
+	background-color: #f5f8fa;
+	padding: 20px 40px 40px 40px;
+	margin: 20px;
+}
+
+#newscolumn-container #newscolumn-title {
+	clear: both;
+	padding: 5px 10px 20px 0;
+	font-size: 23px;
+	font-weight: bold;
+}
+
+#newscolumn-container #newscolumn-ul {
+	font-size: 15px;
+	font-weight: normal;
+	font-color:#c0c0c0;
+}
+
+#newscolumn-container #newscolumn-ul ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+#newscolumn-container #newscolumn-ul a, a:visited {
+	text-decoration: none;
+	font-family: "Nunito", sans-serif;
+	font-weight: normal;
+	line-height: 24px;
+	color: #1a1a1a;
+}

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.as.filesearch.mapper.FileCommentEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.as.filesearch.entity.FileCommentEntity" >
+    <id column="Comment_ID" property="commentId" jdbcType="BIGINT" />
+    <result column="File_ID" property="fileId" jdbcType="VARCHAR" />
+    <result column="Comment_By" property="commentBy" jdbcType="VARCHAR" />
+    <result column="Comment_Time" property="commentTime" jdbcType="TIMESTAMP" />
+    <result column="Is_Delete" property="isDelete" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.as.filesearch.entity.FileCommentEntity" extends="BaseResultMap" >
+    <result column="Comment_Content" property="commentContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    Comment_ID, File_ID, Comment_By, Comment_Time, Is_Delete
+  </sql>
+  <sql id="Blob_Column_List" >
+    Comment_Content
+  </sql>
+  
+  
+    <!-- 取查询总数 -->
+	<select id="selectAllCountByPagination" resultType="java.lang.Integer"
+		parameterType="java.util.Map">
+		select count(*)
+		from d_file_comment dnc
+		where dnc.is_delete = 0
+		<trim >
+		  <if test="fileId != null and fileId !=''">
+				and dnc.file_id = #{fileId}
+			</if>
+		</trim>
+	</select>
+  <!-- 取分页数据 -->
+	<select id="selectAllByPagination" resultMap="ResultMapWithBLOBs"
+		parameterType="java.util.Map">
+		select 
+		<include refid="Base_Column_List" />,
+		<include refid="Blob_Column_List" />
+		from d_file_comment dnc
+		where dnc.is_delete = 0
+		<trim >
+		  <if test="fileId != null and fileId !=''">
+				and dnc.file_id = #{fileId,jdbcType=VARCHAR}
+			</if>
+		</trim>
+		order by Comment_Time asc
+	</select>
+	  
+  
+  
+  
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from d_file_comment
+    where Comment_ID = #{commentId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from d_file_comment
+    where Comment_ID = #{commentId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.as.filesearch.entity.FileCommentEntity" >
+    insert into d_file_comment (Comment_ID, File_ID, Comment_By, 
+      Comment_Time, Is_Delete, Comment_Content
+      )
+    values (#{commentId,jdbcType=BIGINT}, #{fileId,jdbcType=VARCHAR}, #{commentBy,jdbcType=VARCHAR}, 
+      #{commentTime,jdbcType=TIMESTAMP}, #{isDelete,jdbcType=CHAR}, #{commentContent,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.as.filesearch.entity.FileCommentEntity" >
+    insert into d_file_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="commentId != null" >
+        Comment_ID,
+      </if>
+      <if test="fileId != null" >
+        File_ID,
+      </if>
+      <if test="commentBy != null" >
+        Comment_By,
+      </if>
+      <if test="commentTime != null" >
+        Comment_Time,
+      </if>
+      <if test="isDelete != null" >
+        Is_Delete,
+      </if>
+      <if test="commentContent != null" >
+        Comment_Content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="commentId != null" >
+        #{commentId,jdbcType=BIGINT},
+      </if>
+      <if test="fileId != null" >
+        #{fileId,jdbcType=VARCHAR},
+      </if>
+      <if test="commentBy != null" >
+        #{commentBy,jdbcType=VARCHAR},
+      </if>
+      <if test="commentTime != null" >
+        #{commentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null" >
+        #{isDelete,jdbcType=CHAR},
+      </if>
+      <if test="commentContent != null" >
+        #{commentContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.as.filesearch.entity.FileCommentEntity" >
+    update d_file_comment
+    <set >
+      <if test="fileId != null" >
+        File_ID = #{fileId,jdbcType=VARCHAR},
+      </if>
+      <if test="commentBy != null" >
+        Comment_By = #{commentBy,jdbcType=VARCHAR},
+      </if>
+      <if test="commentTime != null" >
+        Comment_Time = #{commentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDelete != null" >
+        Is_Delete = #{isDelete,jdbcType=CHAR},
+      </if>
+      <if test="commentContent != null" >
+        Comment_Content = #{commentContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where Comment_ID = #{commentId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.as.filesearch.entity.FileCommentEntity" >
+    update d_file_comment
+    set File_ID = #{fileId,jdbcType=VARCHAR},
+      Comment_By = #{commentBy,jdbcType=VARCHAR},
+      Comment_Time = #{commentTime,jdbcType=TIMESTAMP},
+      Is_Delete = #{isDelete,jdbcType=CHAR},
+      Comment_Content = #{commentContent,jdbcType=LONGVARCHAR}
+    where Comment_ID = #{commentId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.as.filesearch.entity.FileCommentEntity" >
+    update d_file_comment
+    set File_ID = #{fileId,jdbcType=VARCHAR},
+      Comment_By = #{commentBy,jdbcType=VARCHAR},
+      Comment_Time = #{commentTime,jdbcType=TIMESTAMP},
+      Is_Delete = #{isDelete,jdbcType=CHAR}
+    where Comment_ID = #{commentId,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,153 @@
+/* header部分开始 */
+#header-container {
+	height: 100px;
+	background-color: #48a176;
+	margin: 0px;
+	padding: 0;
+}
+/* 开始Logo部分 */
+#site-logo-container {
+	float: left;
+}
+
+#site-logo-container img {
+	float: left;
+	padding: 20px 20px 20px 40px;
+	border: none; /*去掉图片的边框*/
+}
+
+#site-logo-container h1 {
+	color: #ffffff;
+	padding-top: 30px;
+	display: none;
+}
+
+/* 结束Logo部分 */
+
+/* 开始导航部分 */
+#nav-primary-container {
+	float: right;
+	margin-right: 20px;
+	background-color: #48a176;
+}
+
+/* 当屏幕宽度大于720px */
+/* @media screen and (min-width: 720px) { */
+#nav-primary-container #nav-toggle {
+	display: none;
+}
+
+#nav-primary-menu-container {
+	padding-top: 30px;
+}
+
+#nav-primary-menu-container ul {
+	/* list-style: none; */
+	margin: 0;
+	padding: 0;
+	float: left;
+	list-style-type: none;
+}
+
+#nav-primary-menu-container ul>li {
+	/* float:left; 
+		 display: inline-block;
+		position: relative;*/
+	padding-left:10px;	
+    display: inline-block;
+    list-style: none;
+}
+
+#nav-primary-menu-container ul>li.active {
+	padding-left:10px;	
+    display: inline-block;
+    list-style: none;
+    font-weight: bold;
+}
+
+#nav-primary-menu-container ul>li a {
+	    float: left;
+		color: #ffffff;
+		font-size: 15px;
+		margin: 2px 0px 0px 2px;
+		text-decoration: none;
+		line-height: 30px;
+		height: 30px;
+		letter-spacing: 0.5px; 
+}
+/*当鼠标进入该区域的时候，显示手型图标*/
+#nav-primary-menu-container ul>li a:hover {
+	background-color: #49ab84;
+}
+/* } */
+
+/* 当屏幕大小小于720px时 */
+/* @media screen and (max-width: 720px) {
+	#nav-primary-container #nav-primary-menu-container {
+		display: none;
+		clear: both;
+		position: absolute;
+		left: 0;
+		right: 0;
+		z-index: 99999;
+		padding: 20px;
+		margin: 90px 0 0 0;
+		background-color: #48a176;
+	}
+	#nav-primary-container #nav-toggle {
+		margin: 10px 10px 10px 15px;
+		float: right;
+		background: #fff;
+		border: 2px solid #fff;
+		color: #59ade0;
+		padding: 8px 15px;
+		font-size: 10px;
+		line-height: 1;
+		text-transform: uppercase;
+		outline: none;
+		position: relative;
+		-webkit-border-radius: 99px;
+		-moz-border-radius: 99px;
+		-ms-border-radius: 99px;
+		border-radius: 99px;
+	}
+	#nav-primary-container #nav-primary-menu-container li {
+		border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+		padding: 20px 0 20px 50px;
+	}
+	#nav-primary-container	#nav-primary-menu-container ul>li a {
+		color: #ffffff;
+		font-size: 20px;
+		margin: 2px 0px 0px 2px;
+		padding: 6px 15px;
+		text-decoration: none;
+		line-height: 20px;
+		height: 50px;
+		letter-spacing: 0.5px;
+	}
+
+} */
+
+/* 结束导航部分 */
+
+/* 开始语言开关--隐藏 */
+#site-language-switch {
+	display:none;
+}
+#site-language-switch-display {
+	float: right;
+	margin-left: 10px;
+	margin-right: 10px;
+	padding-top: 36px;
+	background-color: #48a176;
+	color:rgb(255, 255, 255);
+}
+
+#site-language-switch-display a{
+	font-size: 13px;
+	color:rgb(255, 255, 255);
+}
+
+/* 结束语言开关 */
+
+/* header部分结束 */
